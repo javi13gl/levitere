@@ -1,0 +1,81 @@
+/* Studio.
+   Desktop design (1920x1080): 16:9 video flush to the left edge, ~59.5vw wide,
+   vertically centred; text column from ~62.4vw to the right gutter, also centred.
+   Body copy is bold italic; the closing line is bold upright. */
+.studio {
+  display: grid;
+  grid-template-columns: 59.5vw 1fr;
+  grid-template-rows: auto 1fr; /* label row, then video + copy centred */
+  column-gap: 1.1vw;
+  align-items: center;
+}
+
+.studio__label-slot {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  align-self: start;
+}
+
+.studio__video {
+  grid-column: 1;
+  grid-row: 2;
+  width: 100%;
+  max-height: 100%; /* never taller than the row: keeps the section one screen */
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin-left: calc(-1 * var(--gutter)); /* flush to the viewport edge */
+  background: var(--black);
+}
+
+.studio__copy-slot {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.studio__title {
+  margin-bottom: 4.5em;
+}
+
+.studio__text {
+  font-style: italic;
+}
+
+.studio__text p + p {
+  margin-top: 1.25em;
+}
+
+.studio__closing {
+  font-style: normal;
+}
+
+/* Mobile: title, video, text (brief §10). Layout pass deferred. */
+@media (max-width: 767px) {
+  .studio {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .studio__copy-slot,
+  .studio__copy,
+  .studio__label-slot {
+    display: contents;
+  }
+
+  .studio__title {
+    order: 1;
+    margin-bottom: 0.7em;
+  }
+
+  .studio__video {
+    order: 2;
+    width: calc(100% + 2 * var(--gutter));
+    max-width: none; /* beat the global img/video max-width so it bleeds full width */
+    max-height: none;
+    margin-inline: calc(-1 * var(--gutter));
+  }
+
+  .studio__text {
+    order: 3;
+    margin-top: var(--section-gap);
+  }
+}

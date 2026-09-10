@@ -1,0 +1,58 @@
+/* Near full-screen video overlay. Opacity-only transition. */
+.modal {
+  --modal-ratio: 1920 / 818;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  background: var(--black);
+  color: var(--white);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal.is-open {
+  opacity: 1;
+}
+
+.modal__video {
+  aspect-ratio: var(--modal-ratio);
+  width: min(100vw - 2 * var(--gutter), (100vh - 2 * var(--header-h)) * (var(--modal-ratio)));
+  max-height: calc(100vh - 2 * var(--header-h));
+  background: var(--black);
+}
+
+.modal__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  height: var(--header-h);
+  padding-inline: var(--gutter);
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.modal__close-x {
+  font-size: var(--fs-logo);
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* Scroll lock applied by work-modal.js */
+body.is-locked {
+  position: fixed;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}

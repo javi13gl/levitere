@@ -1,0 +1,138 @@
+/* Work — four 4:5 stills in a row (desktop), vertical feed (mobile).
+   Sizes measured on Emilio's desktop design at 1920px:
+   base 352px, adjacent x1.12, hovered x1.48, images vertically centred. */
+.work {
+  /* At rest the four stills are spread across the full width (gutter to gutter).
+     Base width is capped by the viewport height so the hovered still
+     (base x 1.45 x 5/4 tall, centred in the 85vh section under a ~110px head)
+     never reaches the section intro on short screens.
+     Hovered still x1.45, immediate neighbours x1.12 (brief §5). */
+  /* Capped by viewport height so the hovered still always fits the screen. */
+  --work-base: min(16.5vw, calc(52vh - 90px));
+  --work-scale-hover: 1.45;
+  --work-scale-near: 1.12;
+  /* Vertical room the hovered still needs above/below its resting box. */
+  --work-grow: calc(var(--work-base) * 1.25 * (var(--work-scale-hover) - 1) / 2);
+}
+
+.work__intro {
+  margin-top: 0.2em;
+}
+
+.work__grid {
+  flex: 1; /* fills the section: stills sit centred on the screen */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: calc(var(--work-grow) + 1rem);
+}
+
+/* Edge stills grow inwards only, so they keep the page gutter when enlarged. */
+.work__cell:first-child .work__item {
+  transform-origin: left center;
+}
+
+.work__cell:last-child .work__item {
+  transform-origin: right center;
+}
+
+.work__cell {
+  width: var(--work-base);
+  flex: 0 0 auto;
+}
+
+.work__item {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--white);
+  font: inherit;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform calc(var(--dur) + 50ms) var(--ease);
+  will-change: transform;
+}
+
+.work__img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* Location label: centred near the bottom, fades in on hover.
+   The whole item scales, so the label is sized down to read as --fs-sm once scaled. */
+.work__label {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 5%;
+  padding-top: 30%;
+  font-size: calc(var(--fs-sm) / var(--work-scale-hover));
+  line-height: 1.1;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.45), rgb(0 0 0 / 0));
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+
+.work__country {
+  font-size: var(--fs-xs);
+}
+
+@media (min-width: 768px) {
+  .work__item:hover,
+  .work__item:focus-visible {
+    transform: scale(var(--work-scale-hover));
+    z-index: 2;
+  }
+
+  .work__item:hover .work__label,
+  .work__item:focus-visible .work__label {
+    opacity: 1;
+  }
+
+  /* Immediate neighbours grow slightly. Keyboard focus counts (:focus-visible),
+     but not the programmatic focus returned by the modal on close. */
+  .work__cell:hover + .work__cell .work__item,
+  .work__cell:has(+ .work__cell:hover) .work__item,
+  .work__cell:has(:focus-visible) + .work__cell .work__item,
+  .work__cell:has(+ .work__cell :focus-visible) .work__item {
+    transform: scale(var(--work-scale-near));
+    z-index: 1;
+  }
+}
+
+/* Mobile: vertical feed, labels always visible, no hover (brief §6).
+   Kept functional; the mobile pass is deferred. */
+@media (max-width: 767px) {
+  .work__grid {
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--section-gap);
+    /* Emilio's mobile design insets the stills ~8.5% of the width. */
+    padding-inline: var(--gutter);
+    padding-block: var(--section-gap) 0;
+  }
+
+  .work__cell {
+    width: auto;
+  }
+
+  .work__label {
+    opacity: 1;
+    font-size: var(--fs-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work__item,
+  .work__cell:hover + .work__cell .work__item,
+  .work__cell:has(+ .work__cell:hover) .work__item {
+    transform: none !important;
+  }
+}

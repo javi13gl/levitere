@@ -1,0 +1,172 @@
+/* Contact.
+   Desktop design (1920x1080): narrow form column at the left gutter starting at
+   ~24% of the viewport height, bottom-line inputs, info block, and a giant
+   "Levitere" wordmark filling the width at the very bottom. */
+.contact {
+  display: flex;
+  flex-direction: column;
+  /* Last section: fill the viewport so its label lands on the header line when scrolled to. */
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-bottom: 4vh;
+  padding-bottom: 4svh;
+  overflow-x: clip; /* clip the wordmark's bleed without breaking position: sticky */
+}
+
+/* Two columns (client request): title, subtitle and info on the left, the form
+   on the right, so the whole form and the giant wordmark fit one laptop screen. */
+.contact__body {
+  display: grid;
+  grid-template-columns: auto minmax(18rem, 24rem);
+  justify-content: start;
+  column-gap: clamp(3rem, 7vw, 9rem);
+  align-items: start;
+  margin-top: calc(14vh - var(--label-bottom)); /* title at ~14% of the viewport (design: 24%, tightened) */
+}
+
+.contact__title {
+  white-space: nowrap;
+}
+
+.contact__subtitle {
+  font-style: italic;
+}
+
+.form {
+  margin-top: 0.2em;
+}
+
+.form__field + .form__field {
+  margin-top: 0.75em;
+}
+
+.form__input {
+  display: block;
+  width: 100%;
+  padding: 0.35em 0.25em;
+  border: 0;
+  border-bottom: 1px solid var(--black);
+  border-radius: 0;
+  background: none;
+  color: var(--black);
+  font: inherit;
+  line-height: var(--lh);
+}
+
+.form__input::placeholder {
+  color: var(--black);
+  opacity: 1;
+}
+
+.form__input:focus-visible {
+  outline: none;
+  border-bottom-width: 2px;
+  margin-bottom: -1px;
+}
+
+.form__textarea {
+  min-height: 5.8em;
+  resize: none;
+}
+
+.form__field.is-invalid .form__input {
+  border-bottom-color: var(--grey);
+}
+
+.form__actions {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.form__submit {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  cursor: pointer;
+}
+
+.form__submit:disabled {
+  color: var(--grey);
+  cursor: default;
+}
+
+.form__error {
+  color: var(--grey);
+}
+
+.form__success {
+  margin-top: 2.2em;
+}
+
+.contact__info {
+  margin-top: 2.5em;
+  white-space: nowrap;
+}
+
+.contact__info-muted {
+  color: var(--grey);
+}
+
+/* Giant wordmark: real text scaled to the viewport width, sitting on the bottom edge. */
+.contact__wordmark {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  /* wordmark.js scales this so the glyphs span gutter to gutter; this is the fallback. */
+  font-size: 23vw;
+  font-weight: 400;
+  line-height: 0.74; /* "Levitere" has no descenders: box ≈ cap height */
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Mobile: same fields and copy (brief §12). Layout pass deferred. */
+@media (max-width: 767px) {
+  .contact {
+    min-height: 0;
+    padding-bottom: 0;
+  }
+
+  .contact__body {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+  }
+
+  .contact__wordmark {
+    margin-top: calc(var(--section-gap) * 1.5);
+    padding-top: 0;
+  }
+
+  .contact__intro {
+    display: contents;
+  }
+
+  .contact__info {
+    order: 3; /* after the form, as in the mobile design */
+    margin-top: 1.5em;
+  }
+
+  .contact__title {
+    white-space: normal;
+  }
+
+  /* The mobile design stops the input rules short of the right edge. */
+  .form {
+    width: 100%;
+    max-width: 22rem;
+    margin-top: 1.4em;
+  }
+
+  .contact__info {
+    white-space: normal;
+  }
+}

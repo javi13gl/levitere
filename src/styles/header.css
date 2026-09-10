@@ -1,0 +1,57 @@
+/* Fixed header.
+   Over the hero: white links (fade with --hero-fade). Over white sections: nothing
+   (section labels are in-flow text, see sections.css).
+   The "Levitere" wordmark is a separate fixed element that inverts per pixel
+   against whatever is under it (mix-blend-mode: difference, like reome.com):
+   black over white, white over dark video, complementary over imagery. */
+.brand {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  height: var(--header-h);
+  transform: translateX(-50%);
+  color: var(--white);
+  mix-blend-mode: difference;
+  font-size: var(--fs-logo);
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-h);
+  padding-inline: var(--gutter);
+  color: var(--white);
+  pointer-events: none; /* let clicks reach the page except on links */
+}
+
+.header a {
+  pointer-events: auto;
+  text-decoration: none;
+}
+
+.header__links {
+  display: flex;
+  gap: var(--nav-gap);
+  opacity: var(--hero-fade);
+}
+
+.header.is-dark .header__links {
+  visibility: hidden;
+}
+
+/* Mobile: only the wordmark. No menu (brief §4, §14). */
+@media (max-width: 767px) {
+  .header__links {
+    display: none;
+  }
+}

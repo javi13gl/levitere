@@ -1,0 +1,12 @@
+# Normalise line endings: LF in the repo, native in the working copy.
+* text=auto eol=lf
+
+# Shell scripts must keep LF or they break on Linux/macOS.
+*.sh text eol=lf
+
+# Binary assets: never touch, never diff.
+*.mp4 binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.pdf binary

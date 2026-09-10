@@ -1,0 +1,61 @@
+/* Shared section layout. Each section owns its own stylesheet for content. */
+/* One viewport per section: navigating from the menu lands on a full, self-contained
+   screen with no bleed from the neighbouring section (client request). */
+.section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: var(--label-top) var(--gutter) 3vh;
+  background: var(--white);
+  color: var(--black);
+}
+
+.section__title {
+  font-size: var(--fs-lg);
+}
+
+/* Section label (Work / Studio / Contact): in-flow text on the header line,
+   pinned and fading with its section like the rest of the section copy
+   (Emilio's designs show it top-left; the client wants it to behave like
+   "Based in Bergen"). Desktop only: mobile has no labels. */
+.section__label {
+  font-size: var(--fs-lg);
+  line-height: var(--lh);
+}
+
+/* Section copy ([data-pin]) is ordinary in-flow text; scroll-fade.js only
+   fades it out as it is about to leave the viewport through the top. */
+
+/* Work: the in-flow "Work" heading is the section label on desktop, and a
+   normal section title on mobile (Mobil/2). */
+@media (min-width: 768px) {
+  .work__title {
+    font-size: var(--fs-lg);
+    line-height: var(--lh);
+  }
+
+  .work__intro {
+    margin-top: 0.35em;
+  }
+}
+
+/* Mobile is one continuous feed (brief §4): sections are as tall as their content,
+   never forced to a full screen, and no section labels. */
+@media (max-width: 767px) {
+  .section {
+    min-height: 0;
+    padding: var(--section-gap) var(--gutter);
+    /* Anchor jumps land below the fixed wordmark instead of under it. */
+    scroll-margin-top: var(--header-h);
+  }
+
+  .section__label {
+    display: none;
+  }
+
+  .work__title {
+    margin-bottom: 0.35em;
+  }
+}

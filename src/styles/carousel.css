@@ -1,0 +1,132 @@
+/* A Vision Trusted By Leading Brands.
+   Desktop design (1920x1080): title at ~24% of the viewport height, video full-bleed
+   from ~27% to ~89% (the 2:1 videos are cropped to that box), brand + date bottom-left,
+   dots centred at the bottom. */
+.brands__title-slot {
+  margin-top: calc(11vh - var(--label-top)); /* title at ~11% of the viewport (design: 24%, tightened) */
+  margin-bottom: 0.4em;
+}
+
+@media (max-width: 767px) {
+  .brands__title-slot {
+    margin-top: 0;
+  }
+}
+
+.carousel {
+  position: relative;
+  flex: 1; /* fills the rest of the section */
+  min-height: 0;
+  margin-inline: calc(-1 * var(--gutter)); /* full-bleed */
+  background: var(--black);
+  color: var(--white);
+  overflow: hidden;
+  touch-action: pan-y; /* browser keeps vertical scroll; we handle horizontal swipes */
+  user-select: none;
+}
+
+.carousel__slides {
+  position: absolute;
+  inset: 0;
+  cursor: pointer; /* left half → previous, right half → next */
+}
+
+.carousel__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+
+.carousel__slide.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.carousel__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel__caption {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.carousel__date {
+  font-size: var(--fs-xs);
+}
+
+.carousel__dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3.5%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.carousel__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--white);
+  opacity: 0.5;
+  cursor: pointer;
+  transform: scale(1);
+  transition:
+    transform var(--dur-fast) var(--ease),
+    opacity var(--dur-fast) var(--ease);
+}
+
+.carousel__dot:hover {
+  transform: scale(1.3);
+}
+
+.carousel__dot.is-active {
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+.carousel__dot:focus-visible {
+  outline-offset: 6px;
+}
+
+/* Mobile: no brand/date (brief §8). Layout pass deferred. */
+@media (max-width: 767px) {
+  .brands__title-slot {
+    margin-top: 0;
+  }
+
+  .carousel__caption {
+    display: none;
+  }
+
+  .carousel {
+    flex: 0 0 auto;
+    margin-top: 1.2em;
+    /* The client's mobile videos are 4:5; show them uncropped. */
+    aspect-ratio: 4 / 5;
+  }
+
+  .carousel__dots {
+    bottom: 4%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel__dot,
+  .carousel__dot:hover,
+  .carousel__dot.is-active {
+    transform: none;
+  }
+}

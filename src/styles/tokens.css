@@ -1,0 +1,49 @@
+/* Design tokens. Two text sizes only (--fs-lg / --fs-sm), black and white. */
+:root {
+  --font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  /* Type scale: 375px -> 1920px */
+  --fs-lg: clamp(1.25rem, 1rem + 0.7vw, 1.75rem); /* 20px -> 28px */
+  --fs-sm: clamp(0.875rem, 0.8rem + 0.25vw, 1.0625rem); /* 14px -> 17px */
+  /* Sub-size used ONLY for the two tiny labels in Emilio's designs
+     (carousel date, project country). Relative to --fs-sm. */
+  --fs-xs: 0.72em;
+  /* The "Levitere" wordmark in the header is a graphic element, not body text. */
+  --fs-logo: clamp(1.75rem, 1.1rem + 1.4vw, 2.75rem); /* 28px -> 44px */
+
+  --lh: 1.25;
+  --fw: 700;
+
+  --black: #000;
+  --white: #fff;
+  /* Only grey allowed: appears in Emilio's designs (Contact info line, inactive dots).
+     Darkened from the design's #a3a3a3 to meet WCAG AA on white (4.5:1). */
+  --grey: #767676;
+
+  /* Layout */
+  --gutter: clamp(1rem, 1.8vw, 2.25rem); /* 16px -> 35px */
+  /* Vertical rhythm between blocks in the mobile feed. */
+  --section-gap: clamp(2.5rem, 9vw, 4rem);
+  --header-h: clamp(3.75rem, 5vw, 6rem); /* 60px -> 96px */
+  /* Section labels (Work / Studio / Contact) sit on the header line, at the left,
+     in the large size (client: "like subtitles, bigger than the rest"). */
+  --label-line: calc(var(--fs-lg) * var(--lh));
+  --label-top: calc((var(--header-h) - var(--label-line)) / 2);
+  --label-bottom: calc((var(--header-h) + var(--label-line)) / 2);
+  --nav-gap: clamp(3rem, 5.5vw, 6.75rem);
+
+  /* Motion */
+  --dur: 250ms;
+  --dur-fast: 150ms;
+  --ease: cubic-bezier(0.2, 0, 0.2, 1);
+
+  /* Driven by nav.js: 1 over the hero, fades to 0 while scrolling out of it. */
+  --hero-fade: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur: 0ms;
+    --dur-fast: 0ms;
+  }
+}

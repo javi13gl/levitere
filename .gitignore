@@ -1,0 +1,25 @@
+# Dependencies and build output
+node_modules/
+dist/
+
+# Local env (the endpoint URL is baked in at build time)
+.env
+.env.*
+!.env.example
+
+# Client source material: heavy and not served. Keep it on the shared drive.
+# public/video/ holds the web encodes and IS committed (see scripts/encode-videos.sh).
+videos/
+drive-download-*/
+/*.mp4
+
+# Working files
+.shots/
+.encode/
+
+# Tooling
+.vercel
+
+# OS
+.DS_Store
+Thumbs.db

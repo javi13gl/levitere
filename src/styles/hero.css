@@ -1,0 +1,39 @@
+.hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--black);
+  color: var(--white);
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__copy {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 17vh;
+  bottom: 17svh;
+  opacity: var(--hero-fade);
+}
+
+.hero__title {
+  font-size: var(--fs-lg);
+  margin-bottom: 0.45em;
+}
+
+.hero__text {
+  margin-bottom: 1.75em;
+}
+
+.hero__cta {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
